@@ -15,7 +15,13 @@ void main() async {
   ]);
 
   Stripe.publishableKey = AppConstants.stripePublishableKey;
-  await SupabaseService().initialize();
+
+  try {
+    await SupabaseService().initialize();
+  } catch (e) {
+    debugPrint('Supabase init failed: $e');
+    // Still run the app — it will show errors on pages instead of crashing
+  }
 
   runApp(const SmittenbrotApp());
 }
